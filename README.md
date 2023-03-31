@@ -3,4 +3,13 @@
 
 Install the extension on the [Chrome Web Store](www.link.com)
 
+# FAQ
+> Doesn't this already exist?
+
+I said Fuhgeddaboudit.
+
+> This is really dumb...
+
+That's not a question.
+
 Credits: Me on a lazy friday afternoon
