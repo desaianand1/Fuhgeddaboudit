@@ -1,12 +1,8 @@
 # 🚮 Fuhgeddaboudit
+![LICENSE](https://badgen.net/badge/license/MIT/blue) ![CHROME WEB STORE](https://badgen.net/chrome-web-store/v/ckkdlimhmcjmikdlpkmbgfkaikojcbjk?icon=chrome&color=red) ![CHROME RATINGS](https://badgen.net/chrome-web-store/stars/ckkdlimhmcjmikdlpkmbgfkaikojcbjk)
 
-| https://badgen.net/github/license/micromatch/micromatch | https://badgen.net/chrome-web-store/v/ckkdlimhmcjmikdlpkmbgfkaikojcbjk | https://badgen.net/chrome-web-store/stars/ckkdlimhmcjmikdlpkmbgfkaikojcbjk |
-| ------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-
-
-
-
-## Tired of reading about AI, ChatGPT, GPT-4, LLMs etc on every webpage you visit? Well it's time to Fuhgeddaboudit!
+Tired of reading about AI, ChatGPT, GPT-4, LLMs etc on every webpage you visit? 
+***Well it's time to Fuhgeddaboudit!***
 
 Install the extension on the [Chrome Web Store](www.link.com)
 
