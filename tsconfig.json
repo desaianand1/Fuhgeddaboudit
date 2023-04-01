@@ -21,4 +21,5 @@
         "allowUnreachableCode": false,
         "typeRoots": [ "node_modules/@types" ]
     },
+    "exclude": ["dist"]
 }

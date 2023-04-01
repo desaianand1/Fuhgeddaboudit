@@ -4,6 +4,8 @@ const possessivePhrases: string[] = ["my cat's", "large inflateable duck's"];
 //keywords are always lowercase and checks against this map should have the predicate converted to lowercase.
 const keywordMap = new Map<string, string[]>([
   ["ai", nounPhrases],
+  ["a.i.", nounPhrases],
+  ["a.i", nounPhrases],
   ["openai", nounPhrases],
   ["openai's", possessivePhrases],
   ["chatgpt's", possessivePhrases],
@@ -41,4 +43,4 @@ function getReplacementPhrase(word: string, isWord: boolean): string {
   return phrase[index] ?? fallbackReplacement;
 }
 
-export { keywordMap, getReplacementPhrase };
+export { keywordMap, keyPhrasesMap, getReplacementPhrase };
