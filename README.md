@@ -1,7 +1,22 @@
 # 🚮 Fuhgeddaboudit
-> Tired of reading about AI, ChatGPT, GPT-4, LLMs etc on every webpage you visit? Well it's time to Fuhgeddaboudit!
+
+| https://badgen.net/github/license/micromatch/micromatch | https://badgen.net/chrome-web-store/v/ckkdlimhmcjmikdlpkmbgfkaikojcbjk | https://badgen.net/chrome-web-store/stars/ckkdlimhmcjmikdlpkmbgfkaikojcbjk |
+| ------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+
+
+
+
+## Tired of reading about AI, ChatGPT, GPT-4, LLMs etc on every webpage you visit? Well it's time to Fuhgeddaboudit!
 
 Install the extension on the [Chrome Web Store](www.link.com)
+
+# 😤 I want to build and run it myself
+
+1. Clone the repository and install dev dependencies using ```npm install```
+2. ```npm run build``` to generate the build (found in the ```/dist``` directory)
+3. ???
+4. Google Chrome > Extensions > Enable Developer Mode > Load Unpacked extension
+5. 🎊 Profit!
 
 # FAQ
 > Doesn't this already exist?

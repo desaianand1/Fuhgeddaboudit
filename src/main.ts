@@ -15,10 +15,9 @@ function isTextNode(node: Node): boolean {
 
 function replaceMatchedText(textNode: ChildNode) {
   const parentEl = textNode.parentElement;
-
   if (textNode.textContent !== null && parentEl !== null) {
     let sentence = textNode.textContent;
-    parentEl.classList.add("text-fade-out");
+    // parentEl.classList.add("text-fade-out");
 
     // 1. Check if keyword map contains individual words
     const words = sentence.split(" ");
@@ -47,7 +46,7 @@ function replaceMatchedText(textNode: ChildNode) {
         );
       }
     });
-    parentEl.classList.remove("text-fade-out");
+    // parentEl.classList.remove("text-fade-out");
     parentEl.classList.add("text-fade-in");
   }
 }
