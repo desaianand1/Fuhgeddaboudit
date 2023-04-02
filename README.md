@@ -8,7 +8,7 @@ Wish you were back in the AI winter of the 80s?
 
 ***Well it's time to Fuhgeddaboudit!***
 
-# Install the extension on the [Chrome Web Store](www.link.com)
+## Install the extension on the [Chrome Web Store](www.link.com)
 
 # 😤 I want to build and run it myself
 
