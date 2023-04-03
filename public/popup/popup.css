@@ -1,0 +1,67 @@
+:root {
+  --font-family: Gadugi, Open Sans, Poppins, Segoe UI, Roboto, Helvetica Neue,
+    sans-serif;
+  --primary: #0046ff;
+  --font-size: 1.2em;
+  --line-height: 1.5em;
+
+  --switch-width: 10em;
+  --switch-height: 5em;
+  --switch-margin: 0.4em;
+}
+
+html {
+  font-size: 100%; /* defaults to 16px; */
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+.container {
+  display: grid;
+  justify-items: center;
+}
+
+input#toggle-switch[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+label#switch-label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: grey;
+  display: block;
+  position: relative;
+  border-radius: calc(var(--switch-height) / 2);
+}
+
+label#switch-label:after {
+  content: "";
+  position: absolute;
+  top: var(--switch-margin);
+  left: var(--switch-margin);
+  width: calc(var(--switch-height) - (2 * var(--switch-margin)));
+  height: calc(var(--switch-height) - (2 * var(--switch-margin)));
+  background: #fff;
+  border-radius: calc((var(--switch-height) - (2 * var(--switch-margin)) / 2));
+  transition: 0.3s;
+}
+
+input#toggle-switch:checked + label {
+  background: var(--primary);
+}
+
+input#toggle-switch:checked + label:after {
+  left: calc(100% - var(--switch-margin));
+  transform: translateX(-100%);
+}
+
+label#switch-label:active:after {
+  width: calc(0.55 * var(--switch-width));
+}
