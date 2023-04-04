@@ -51,7 +51,6 @@ label#switch-label {
 }
 
 label#switch-label:after {
-  content: "";
   position: absolute;
   top: var(--switch-margin);
   left: var(--switch-margin);
@@ -60,6 +59,7 @@ label#switch-label:after {
   background: #fff;
   border-radius: calc((var(--switch-height) - (2 * var(--switch-margin)) / 2));
   transition: 0.3s;
+  content: "";
 }
 
 input#toggle-switch:checked + label {
