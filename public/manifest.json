@@ -1,21 +1,39 @@
 {
-    "manifest_version": 3,
-    "name": "🚮 Fuhgeddaboudit",
-    "version": "0.1",
-    "author": "Anand Desai",
-    "description": "Tired of reading about AI and ChatGPT on every webpage you visit? Well it's time to Fuhgeddaboudit!",
-    "icons": {
+  "manifest_version": 3,
+  "name": "🚮 Fuhgeddaboudit",
+  "version": "0.1",
+  "author": "Anand Desai",
+  "description": "Tired of reading about AI and ChatGPT on every webpage you visit? Well it's time to Fuhgeddaboudit!",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "css": [
+        "css/index.css"
+      ],
+      "js": [
+        "main.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
       "16": "icons/16.png",
       "32": "icons/32.png",
       "48": "icons/48.png",
       "64": "icons/64.png",
       "128": "icons/128.png"
     },
-    "content_scripts": [
-      {
-        "matches": ["https://*/*","http://*/*"],
-        "css": ["css/index.css"],
-        "js": ["main.js"]
-      }
-    ]
+    "default_title": "Toggle 🚮 Fuhgeddaboudit!"
   }
+}

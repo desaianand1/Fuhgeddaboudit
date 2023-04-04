@@ -2,9 +2,10 @@
   --font-family: Gadugi, Open Sans, Poppins, Segoe UI, Roboto, Helvetica Neue,
     sans-serif;
   --primary: #0046ff;
-  --font-size: 1.2em;
+  --font-size: 1em;
   --line-height: 1.5em;
-
+  --margin: 0.5em;
+  --padding: 1em;
   --switch-width: 10em;
   --switch-height: 5em;
   --switch-margin: 0.4em;
@@ -12,6 +13,12 @@
 
 html {
   font-size: 100%; /* defaults to 16px; */
+  /** Maximum 800 x 600
+   https://developer.chrome.com/docs/extensions/reference/browserAction/#popup
+   */
+  width: max-content;
+  height:max-content;
+  overflow: hidden;
 }
 
 body {
@@ -22,6 +29,8 @@ body {
 .container {
   display: grid;
   justify-items: center;
+  margin: var(--margin);
+  padding: var(--padding);
 }
 
 input#toggle-switch[type="checkbox"] {
