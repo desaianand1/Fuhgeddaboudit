@@ -6,11 +6,16 @@ const config: Configuration = {
   mode: "production",
   entry: {
     main: resolve(__dirname, "..", "src", "main.ts"),
-    data: resolve(__dirname, "..", "src", "data.ts"),
+    phrase_data: resolve(__dirname, "..", "src", "phrase_data.ts"),
+    replacer: resolve(__dirname, "..", "src", "replacer.ts"),
     popup: {
       import: resolve(__dirname, "..", "src", "popup", "popup.ts"),
       filename: join("popup", "popup.js"),
     },
+    headline: {
+      import: resolve(__dirname, "..", "src", "popup", "headline.ts"),
+      filename: join("popup", "headline.js"),
+    }
   },
   output: {
     path: join(__dirname, "../dist/"),

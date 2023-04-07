@@ -1,71 +1,33 @@
-import { getReplacementPhrase, keyPhrasesMap, keywordMap } from "./data";
+import { findAndReplaceMatches } from "./replacer";
 
-function isTextNode(node: Node): boolean {
-  return node.nodeType === Node.TEXT_NODE;
-}
-
-function replaceMatchedTextClosure(
-  element: Element
-): (value: ChildNode, index: number) => void {
-  return (textNode, index) => {
-    replaceMatchedText(textNode, index, element);
-  };
-}
-
-function replaceMatchedText(
-  textNode: ChildNode,
-  index: number,
-  parentElement: Element
-) {
-  const textElement = parentElement.children[index];
-  if (textNode.textContent !== null) {
-    let sentence = textNode.textContent;
-    textElement?.classList.add("text-fade-out");
-
-    // 1. Check if keyword map contains individual words
-    const words = sentence.split(" ");
-    words?.forEach((word) => {
-      const wordNoSpecialChars = word.replace(/[^\w\s]/gi, "");
-      const lowerCaseWord = wordNoSpecialChars.toLowerCase();
-      if (keywordMap.has(lowerCaseWord)) {
-        console.log(textNode.textContent);
-        textNode.textContent = textNode.textContent!!.replaceAll(
-          word,
-          getReplacementPhrase(lowerCaseWord, true)
-        );
+const moCallback: MutationCallback = (mutations: MutationRecord[]) => {
+  for (const mutation of mutations) {
+    if (mutation.type === 'childList') {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as HTMLElement;
+          findAndReplaceMatches(element);
+        }
       }
-    });
-    sentence = sentence.toLowerCase();
-    // 2. Check if sentence contains keyphrases.
-    Object.keys(keyPhrasesMap).forEach((phrase) => {
-      if (sentence.includes(phrase)) {
-        const caseSensitivePhraseIdx = sentence.indexOf(phrase);
-        const caseSensitivePhrase = textNode.textContent?.slice(
-          caseSensitivePhraseIdx,
-          caseSensitivePhraseIdx + phrase.length
-        );
-
-        textNode.textContent = textNode.textContent!!.replaceAll(
-          caseSensitivePhrase!!,
-          getReplacementPhrase(phrase, false)
-        );
-      }
-    });
-
-    textElement?.classList.remove("text-fade-out");
-    textElement?.classList.add("text-fade-in");
+    }
   }
+};
+
+const config : MutationObserverInit= {childList: true, subtree: true };
+const observer = new MutationObserver(moCallback);
+
+function onPageLoad() {
+  // 1. On page load, get possible text elements. Match and replace their keywords/phrases.
+  findAndReplaceMatches(document.body);
+  // 2. For infinite scrolling pages, where data and DOM elements are added as you scroll, allow the mutation observer to find new text elements and run the match-replace on them
+  observer.observe(document.body, config);
 }
 
-function onPageLoaded() {
-  const possibleElements = document.body.querySelectorAll(
-    "*:not(script):not(noscript):not(style)"
-  );
-  possibleElements.forEach((element: Element) => {
-    [...element.childNodes]
-      .filter(isTextNode)
-      .forEach(replaceMatchedTextClosure(element));
-  });
+function onPageUnload() {
+  observer.disconnect();
 }
 
-window.onload = onPageLoaded;
+window.onload = onPageLoad;
+window.onunload = onPageUnload;
+
+
