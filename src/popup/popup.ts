@@ -1,16 +1,17 @@
 import { setHeadline } from "./headline";
 
-const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
-  document.querySelector("input#toggle-switch[type=checkbox]")
-);
-
-if (toggleSwitch === null) {
-  console.error(
-    "No input element with id #toggle-switch found in popup.html !"
+{
+  const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
+    document.querySelector("input#toggle-switch[type=checkbox]")
   );
-} else {
-  setHeadline(toggleSwitch.checked);
-  toggleSwitch.addEventListener("change", onToggle);
+  if (toggleSwitch === null) {
+    console.error(
+      "No input element with id #toggle-switch found in popup.html !"
+    );
+  } else {
+    setHeadline(toggleSwitch.checked);
+    toggleSwitch.addEventListener("change", onToggle);
+  }
 }
 
 function onToggle(event: Event) {

@@ -71,6 +71,7 @@ function createHeadline(isToggled: boolean): void {
   }
   headlineContainer.appendChild(template);
 }
+
 function setHeadline(isToggled: boolean): void {
   const headlineSpan = headlineContainer.querySelector("span#headline-text");
   if (headlineSpan === null) {
