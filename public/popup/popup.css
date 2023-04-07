@@ -1,7 +1,10 @@
 :root {
-  --font-family: Gadugi, Open Sans, Poppins, Segoe UI, Roboto, Helvetica Neue,
-    sans-serif;
+  --font-family: Poppins, Lato, Noto Sans, Open Sans, Segoe UI, Roboto,
+    Helvetica Neue, sans-serif;
   --primary: #0046ff;
+  --primaryText: #00154c;
+  --deemphasizedText: #444b6a;
+  --bg: #e6edff;
   --font-size: 1em;
   --line-height: 1.5em;
   --margin: 0.5em;
@@ -16,8 +19,8 @@ html {
   /** Maximum 800 x 600
    https://developer.chrome.com/docs/extensions/reference/browserAction/#popup
    */
-  width: max-content;
-  height:max-content;
+  width: 500px;
+  height: max-content;
   overflow: hidden;
 }
 
@@ -25,12 +28,44 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
+  background-color: var(--bg);
+  color: var(--primaryText);
 }
 .container {
   display: grid;
   justify-items: center;
   margin: var(--margin);
   padding: var(--padding);
+}
+
+#header > span {
+  font-style: italic;
+  padding-inline-start: 0.2em;
+}
+#headline-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-block: 0.5em;
+}
+
+#headline-text {
+  font-weight: bold;
+  font-size: 1.75em;
+}
+
+.deemphasized-text {
+  color: var(--deemphasizedText);
+}
+
+.emphasized-text {
+  color: var(--primary);
+  font-weight: bolder;
+}
+
+picture.emoji {
+  margin-inline-end: 0.75em;
 }
 
 input#toggle-switch[type="checkbox"] {
@@ -73,4 +108,13 @@ input#toggle-switch:checked + label:after {
 
 label#switch-label:active:after {
   width: calc(0.55 * var(--switch-width));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #7096FF;
+    --primaryText: #C8D6FF;
+    --bg: #000719;
+    --deemphasizedText: #A1A1A1;
+  }
 }
