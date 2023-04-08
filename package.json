@@ -1,6 +1,6 @@
 {
   "name": "fuhgeddaboudit",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "> Tired of reading about AI, ChatGPT, GPT-4, LLMs etc on every webpage you visit? Well it's time to Fuhgeddaboudit!",
   "main": "index.js",
   "scripts": {

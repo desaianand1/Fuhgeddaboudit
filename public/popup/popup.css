@@ -4,7 +4,9 @@
   --primary: #0046ff;
   --primaryText: #00154c;
   --deemphasizedText: #444b6a;
-  --bg: #e6edff;
+  --bg: #ccdaff;
+  --bg-grad0: #cee6f9;
+  --bg-grad1: #e2defa;
   --font-size: 1em;
   --line-height: 1.5em;
   --margin: 0.5em;
@@ -28,9 +30,53 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
-  background-color: var(--bg);
   color: var(--primaryText);
+  background: linear-gradient(
+    45deg,
+    var(--bg-grad0),
+    var(--bg),
+    var(--bg-grad1)
+  );
+  background-size: 600% 600%;
+  -webkit-animation: gradientAnimation 30s ease infinite;
+  -moz-animation: gradientAnimation 30s ease infinite;
+  animation: gradientAnimation 30s ease infinite;
 }
+
+@-webkit-keyframes gradientAnimation {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+@-moz-keyframes gradientAnimation {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+@keyframes gradientAnimation {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
 .container {
   display: grid;
   justify-items: center;
@@ -68,12 +114,22 @@ picture.emoji {
   margin-inline-end: 0.75em;
 }
 
+.page-reload-disclaimer {
+  font-size: 0.8em;
+  font-weight: 400;
+  padding-block: var(--padding);
+}
+
+.page-reload-disclaimer > a {
+  color: var(--primaryText);
+}
+
 .issues-container {
   display: grid;
   align-items: end;
   text-align: right;
-  padding-block-end: calc(var(--padding)/2);
-  padding-inline-end: calc(var(--padding)/2);
+  padding-block-end: calc(var(--padding) / 2);
+  padding-inline-end: calc(var(--padding) / 2);
 }
 
 a.issues-text {
@@ -136,7 +192,21 @@ label#switch-label:active:after {
   :root {
     --primary: #7096ff;
     --primaryText: #c8d6ff;
-    --bg: #000719;
     --deemphasizedText: #a1a1a1;
+    --bg: #000e33;
+    --bg-grad0: #021a2d;
+    --bg-grad1: #16122e;
+  }
+  body {
+    background: linear-gradient(
+      45deg,
+      var(--bg-grad0),
+      var(--bg),
+      var(--bg-grad1)
+    );
+    background-size: 600% 600%;
+    -webkit-animation: gradientAnimation 30s ease infinite;
+    -moz-animation: gradientAnimation 30s ease infinite;
+    animation: gradientAnimation 30s ease infinite;
   }
 }

@@ -75,11 +75,8 @@ function createHeadline(isToggled: boolean): void {
 function setHeadline(isToggled: boolean): void {
   const headlineSpan = headlineContainer.querySelector("span#headline-text");
   if (headlineSpan === null) {
-    console.log("no headlineSpan, creating headline");
     createHeadline(isToggled);
   } else {
-    console.log("existing headlineSpan, modifying headline");
-
     const picSrc = headlineContainer.querySelector(
       "picture.emoji>source"
     ) as HTMLSourceElement;
