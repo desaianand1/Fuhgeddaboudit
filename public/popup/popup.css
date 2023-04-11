@@ -163,6 +163,11 @@ label#switch-label {
   border-radius: calc(var(--switch-height) / 2);
 }
 
+input#toggle-switch[disabled] + label#switch-label {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 label#switch-label:after {
   position: absolute;
   top: var(--switch-margin);

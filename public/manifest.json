@@ -13,8 +13,13 @@
   },
   "permissions": [
     "scripting",
-    "storage"
+    "storage",
+    "activeTab"
   ],
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {

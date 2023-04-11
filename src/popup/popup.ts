@@ -1,5 +1,22 @@
 import { setHeadline } from "./headline";
-{
+
+function onMessageReceived(
+  message: ToggleStateMessage,
+  sender: chrome.runtime.MessageSender
+) {
+  console.log("popup received message from sender: " + sender);
+  const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
+    document.querySelector("input#toggle-switch[type=checkbox]")
+  );
+  if (toggleSwitch.disabled) {
+    toggleSwitch.disabled = false;
+  }
+
+  toggleSwitch.checked = message.isToggled;
+  setHeadline(message.isToggled);
+}
+
+function init(): void {
   const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
     document.querySelector("input#toggle-switch[type=checkbox]")
   );
@@ -8,76 +25,19 @@ import { setHeadline } from "./headline";
       "No input element with id #toggle-switch found in popup.html !"
     );
   } else {
-    init(toggleSwitch);
+    chrome.runtime.onMessage.addListener(onMessageReceived);
+    // disable the toggle-switch initially. Re-enable when a message from service-worker is received regarding saved toggleState
+    toggleSwitch.disabled = true;
+    toggleSwitch.addEventListener("change", onToggle);
   }
-}
-
-async function init(toggleSwitch: HTMLInputElement): Promise<void> {
-  let savedToggleState = await getSavedState();
-  if (savedToggleState === undefined) {
-    const toggleStateFromHTML = toggleSwitch.checked;
-    savedToggleState = toggleStateFromHTML;
-    await saveState(toggleStateFromHTML);
-  }
-  setHeadline(savedToggleState);
-  handleContentScriptRegistration(savedToggleState);
-  toggleSwitch.checked = savedToggleState;
-  toggleSwitch.addEventListener("change", onToggle);
 }
 
 function onToggle(event: Event) {
   const toggleSwitch = <HTMLInputElement>event.target;
   const toggleState = toggleSwitch.checked;
   setHeadline(toggleState);
-  saveState(toggleState);
-  handleContentScriptRegistration(toggleState);
+  const msg: ToggleStateMessage = { isToggled: toggleState };
+  chrome.runtime.sendMessage(msg);
 }
 
-async function getSavedState(): Promise<boolean | undefined> {
-  return chrome.storage.local.get("isToggled").then((snapshot) => {
-    return snapshot.isToggled;
-  });
-}
-async function saveState(isToggled: boolean): Promise<void> {
-  return chrome.storage.local.set({ isToggled: isToggled });
-}
-
-async function isCSAlreadyRegistered(id: string): Promise<boolean> {
-  return chrome.scripting
-    .getRegisteredContentScripts({ ids: [id] })
-    .then((registeredCSArr) => {
-      const arr = registeredCSArr.filter((cs) => {
-        return cs.id === id;
-      });
-      if (arr.length > 1) {
-        console.error(`Duplicate content scripts registered with id: ${id} !`);
-      }
-      return arr.length === 1;
-    });
-}
-
-async function handleContentScriptRegistration(isToggled: boolean) {
-  const csId = "keyword-replacer";
-  const isRegistered = await isCSAlreadyRegistered(csId);
-
-  if (isToggled && !isRegistered) {
-    await chrome.scripting
-      .registerContentScripts([
-        {
-          id: csId,
-          js: ["main.js"],
-          css: ["css/index.css"],
-          matches: ["https://*/*", "http://*/*"],
-        },
-      ])
-      .catch((err) =>
-        console.error(`Error registering content script id ${csId}`, err)
-      );
-  } else if (!isToggled && isRegistered) {
-    await chrome.scripting
-      .unregisterContentScripts({ ids: [csId] })
-      .catch((err) =>
-        console.error(`Error un-registering content script id ${csId}`, err)
-      );
-  }
-}
+init();

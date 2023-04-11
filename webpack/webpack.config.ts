@@ -8,6 +8,7 @@ const config: Configuration = {
     main: resolve(__dirname, "..", "src", "main.ts"),
     phrase_data: resolve(__dirname, "..", "src", "phrase_data.ts"),
     replacer: resolve(__dirname, "..", "src", "replacer.ts"),
+    service_worker: resolve(__dirname, "..", "src", "service_worker.ts"),
     popup: {
       import: resolve(__dirname, "..", "src", "popup", "popup.ts"),
       filename: join("popup", "popup.js"),

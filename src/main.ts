@@ -16,6 +16,7 @@ const moCallback: MutationCallback = (mutations: MutationRecord[]) => {
 const observer = new MutationObserver(moCallback);
 
 function onPageLoad() {
+  console.log("Page loaded ran");
   // 1. On page load, get possible text elements. Match and replace their keywords/phrases.
   findAndReplaceMatches(document.body);
   // 2. For infinite scrolling pages, where data and DOM elements are added as you scroll, allow the mutation observer to find new text elements and run the match-replace on them
@@ -26,6 +27,6 @@ function onPageLoad() {
 function onPageUnload() {
   observer.disconnect();
 }
-
+console.log("content script ran");
 window.onload = onPageLoad;
 window.onunload = onPageUnload;
