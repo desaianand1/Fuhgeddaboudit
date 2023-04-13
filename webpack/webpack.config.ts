@@ -9,6 +9,9 @@ const config: Configuration = {
     phrase_data: resolve(__dirname, "..", "src", "phrase_data.ts"),
     replacer: resolve(__dirname, "..", "src", "replacer.ts"),
     service_worker: resolve(__dirname, "..", "src", "service_worker.ts"),
+    badge: resolve(__dirname, "..", "src", "badge.ts"),
+    cs_registration: resolve(__dirname, "..", "src", "cs_registration.ts"),
+    storage: resolve(__dirname, "..", "src", "storage.ts"),
     popup: {
       import: resolve(__dirname, "..", "src", "popup", "popup.ts"),
       filename: join("popup", "popup.js"),
