@@ -1,5 +1,5 @@
 import { getSavedState, saveState } from "./storage";
-
+import { setBadgeDefaultColor, setBadgeText } from "./badge";
 interface ToggleStateMessage {
   isToggled: boolean;
 }
@@ -32,7 +32,7 @@ async function init(): Promise<void> {
   } else {
     console.log("Attempting tabs send message");
     chrome.tabs.sendMessage(activeTab.id, msg);
-    await toggleBadge(msg.isToggled);
+    await setBadgeText(msg.isToggled);
     console.log("Sent message..");
   }
 }
@@ -57,8 +57,6 @@ function onTabUpdated(
     console.log(`${tabId} updated for some other reason...`);
   }
 }
-
-
 
 async function isCSAlreadyRegistered(id: string): Promise<boolean> {
   console.log("is cs registered?");
@@ -104,15 +102,6 @@ async function handleContentScriptRegistration(isToggled: boolean) {
         console.error(`Error un-registering content script id ${csId}`, err)
       );
   }
-}
-
-async function toggleBadge(isToggled:boolean){
-  const badgeText = isToggled ? "ON": "";
-  await chrome.action.setBadgeText({text:badgeText});
-}
-
-async function setBadgeDefaultColor(){
-  await chrome.action.setBadgeBackgroundColor({color: "#0040F0"});
 }
 
 chrome.runtime.onMessage.addListener(onMessageReceived);
