@@ -1,19 +1,41 @@
+import { getSavedState, saveState } from "./storage";
+
 interface ToggleStateMessage {
   isToggled: boolean;
 }
+
 async function init(): Promise<void> {
   console.log("service-worker started up!");
+  await setBadgeDefaultColor();
   const initialToggleState = true; //default to true on first install/run
   let savedToggleState = await getSavedState();
   // savedToggleState is undefined on first extension run/install since storage would be empty.
   if (savedToggleState === undefined) {
-    savedToggleState = initialToggleState;    
+    savedToggleState = initialToggleState;
     await saveState(savedToggleState);
   }
-  const msg : ToggleStateMessage = {isToggled: savedToggleState};
-  chrome.runtime.sendMessage(msg);
+  const msg: ToggleStateMessage = { isToggled: savedToggleState };
+  const activeTabs = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  if (activeTabs.length !== 1) {
+    console.error(
+      `No active tab available or multiple active tabs encountered! Unable to init popup/content-script.`
+    );
+  }
+  const activeTab = activeTabs[0]!!;
+  if (activeTab.id === undefined) {
+    console.error(
+      `active tab has no ID (undefined)! Unable to init popup/content-script.`
+    );
+  } else {
+    console.log("Attempting tabs send message");
+    chrome.tabs.sendMessage(activeTab.id, msg);
+    await toggleBadge(msg.isToggled);
+    console.log("Sent message..");
+  }
 }
-
 
 async function onMessageReceived(
   message: ToggleStateMessage,
@@ -22,27 +44,24 @@ async function onMessageReceived(
   console.log("service-worker received message from sender: " + sender);
   await saveState(message.isToggled);
   handleContentScriptRegistration(message.isToggled);
-
 }
 
-function onTabUpdated(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab:chrome.tabs.Tab){
-  if(tab.active){
+function onTabUpdated(
+  tabId: number,
+  changeInfo: chrome.tabs.TabChangeInfo,
+  tab: chrome.tabs.Tab
+) {
+  if (tab.active) {
     console.log(`active tab is ${tabId}`);
-  }else{
+  } else {
     console.log(`${tabId} updated for some other reason...`);
   }
 }
 
-async function getSavedState(): Promise<boolean | undefined> {
-  return chrome.storage.local.get("isToggled").then((snapshot) => {
-    return snapshot.isToggled;
-  });
-}
-async function saveState(isToggled: boolean): Promise<void> {
-  return chrome.storage.local.set({ isToggled: isToggled });
-}
+
 
 async function isCSAlreadyRegistered(id: string): Promise<boolean> {
+  console.log("is cs registered?");
   return chrome.scripting
     .getRegisteredContentScripts({ ids: [id] })
     .then((registeredCSArr) => {
@@ -52,7 +71,9 @@ async function isCSAlreadyRegistered(id: string): Promise<boolean> {
       if (arr.length > 1) {
         console.error(`Duplicate content scripts registered with id: ${id} !`);
       }
-      arr.length === 1 ? console.log(`${id} content script already registered!`) : console.log(`${id} content script NOT registered!`);
+      arr.length === 1
+        ? console.log(`${id} content script already registered!`)
+        : console.log(`${id} content script NOT registered!`);
       return arr.length === 1;
     });
 }
@@ -60,7 +81,7 @@ async function isCSAlreadyRegistered(id: string): Promise<boolean> {
 async function handleContentScriptRegistration(isToggled: boolean) {
   const csId = "keyword-replacer";
   const isRegistered = await isCSAlreadyRegistered(csId);
- 
+  console.log("deciding cs registration");
   if (isToggled && !isRegistered) {
     await chrome.scripting
       .registerContentScripts([
@@ -71,18 +92,27 @@ async function handleContentScriptRegistration(isToggled: boolean) {
           matches: ["https://*/*", "http://*/*"],
         },
       ])
-      .then(()=> console.log(`Registered ${csId} content script`))
+      .then(() => console.log(`Registered ${csId} content script`))
       .catch((err) =>
         console.error(`Error registering content script id ${csId}`, err)
       );
   } else if (!isToggled && isRegistered) {
     await chrome.scripting
       .unregisterContentScripts({ ids: [csId] })
-      .then(()=> console.log(`Un-registered ${csId} content script`))
+      .then(() => console.log(`Un-registered ${csId} content script`))
       .catch((err) =>
         console.error(`Error un-registering content script id ${csId}`, err)
       );
   }
+}
+
+async function toggleBadge(isToggled:boolean){
+  const badgeText = isToggled ? "ON": "";
+  await chrome.action.setBadgeText({text:badgeText});
+}
+
+async function setBadgeDefaultColor(){
+  await chrome.action.setBadgeBackgroundColor({color: "#0040F0"});
 }
 
 chrome.runtime.onMessage.addListener(onMessageReceived);
