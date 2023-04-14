@@ -16,12 +16,14 @@ async function isCSAlreadyRegistered(id: string): Promise<boolean> {
     });
 }
 
-async function handleContentScriptRegistration(isToggled: boolean) {
-  const csId = "keyword-replacer";
+async function handleContentScriptRegistration(
+  csId: string,
+  isToggled: boolean
+) {
   const isRegistered = await isCSAlreadyRegistered(csId);
   console.log("deciding cs registration");
   if (isToggled && !isRegistered) {
-    await chrome.scripting
+    return await chrome.scripting
       .registerContentScripts([
         {
           id: csId,
@@ -35,7 +37,7 @@ async function handleContentScriptRegistration(isToggled: boolean) {
         console.error(`Error registering content script id ${csId}`, err)
       );
   } else if (!isToggled && isRegistered) {
-    await chrome.scripting
+    return await chrome.scripting
       .unregisterContentScripts({ ids: [csId] })
       .then(() => console.log(`Un-registered ${csId} content script`))
       .catch((err) =>
@@ -44,4 +46,29 @@ async function handleContentScriptRegistration(isToggled: boolean) {
   }
 }
 
-export { handleContentScriptRegistration, isCSAlreadyRegistered };
+async function executeRegisteredScript(csId: string, tabId: number) {
+  const isRegistered = await isCSAlreadyRegistered(csId);
+  console.log("deciding cs registration");
+  if (isRegistered) {
+    const executeScriptPromise = chrome.scripting
+      .executeScript({
+        files: ["main.js"],
+        injectImmediately: true,
+        target: { tabId: tabId },
+      })
+      .then(() => console.log(`Executed content-script ${csId} !`))
+      .catch((err) =>
+        console.error(`Error executing content-script ${csId}`, err)
+      );
+
+    const insertCSSPromise = chrome.scripting.insertCSS({
+      target: { tabId: tabId },
+      files: ["css/index.css"],
+    });
+    return await Promise.all([executeScriptPromise, insertCSSPromise]);
+  } else {
+    return;
+  }
+}
+
+export { handleContentScriptRegistration, executeRegisteredScript };

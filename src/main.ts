@@ -30,3 +30,4 @@ function onPageUnload() {
 console.log("content script ran");
 window.onload = onPageLoad;
 window.onunload = onPageUnload;
+onPageLoad();

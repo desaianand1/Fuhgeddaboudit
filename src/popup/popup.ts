@@ -1,22 +1,24 @@
 import { setHeadline } from "./headline";
+import { ToggleStateMessage } from "../service_worker";
+import { getSavedState } from "../storage";
 
-function onMessageReceived(
-  message: ToggleStateMessage,
-  sender: chrome.runtime.MessageSender
+async function disableSwitchDecorator(
+  fn: (toggleSwitch: HTMLInputElement) => Promise<void>,
+  arg: HTMLInputElement
 ) {
-  console.log("popup received message from sender: " + sender);
-  const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
-    document.querySelector("input#toggle-switch[type=checkbox]")
-  );
-  if (toggleSwitch.disabled) {
-    toggleSwitch.disabled = false;
-  }
-
-  toggleSwitch.checked = message.isToggled;
-  setHeadline(message.isToggled);
+  arg.disabled = true;
+  await fn(arg);
+  arg.disabled = false;
 }
 
-function init(): void {
+async function setSavedState(toggleSwitch: HTMLInputElement) {
+  let savedToggleState = await getSavedState();
+  toggleSwitch.checked = savedToggleState;
+  setHeadline(savedToggleState);
+}
+
+async function init(): Promise<void> {
+  console.log("popup initialized");
   const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
     document.querySelector("input#toggle-switch[type=checkbox]")
   );
@@ -25,10 +27,8 @@ function init(): void {
       "No input element with id #toggle-switch found in popup.html !"
     );
   } else {
-    chrome.runtime.onMessage.addListener(onMessageReceived);
-    // disable the toggle-switch initially. Re-enable when a message from service-worker is received regarding saved toggleState
-    toggleSwitch.disabled = true;
     toggleSwitch.addEventListener("change", onToggle);
+    disableSwitchDecorator(setSavedState, toggleSwitch);
   }
 }
 
