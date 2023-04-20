@@ -16,9 +16,9 @@ const keywordMap = new Map<string, string[]>([
   ["openai", authorityNounPhrases],
   ["openais", possessivePhrases],
   ["chatgpts", possessivePhrases],
-  ["chatgpt4", possessivePhrases],
-  ["chatgptgpt4", possessivePhrases], //when separated by a '/' which is stripped
-  ["chatgptgpt", possessivePhrases], //when separated by a '/' which is stripped
+  ["chatgpt4", authorityNounPhrases],
+  ["chatgptgpt4", authorityNounPhrases], //when separated by a '/' which is stripped
+  ["chatgptgpt", authorityNounPhrases], //when separated by a '/' which is stripped
   ["aipowered", possessivePhrases], //when separated by a '/' which is stripped
   ["gpts", possessivePhrases],
   ["chatgpt", authorityNounPhrases],
