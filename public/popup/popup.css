@@ -5,8 +5,6 @@
   --primaryText: #00154c;
   --deemphasizedText: #444b6a;
   --bg: #ccdaff;
-  --bg-grad0: #cee6f9;
-  --bg-grad1: #e2defa;
   --font-size: 1em;
   --line-height: 1.5em;
   --margin: 0.5em;
@@ -31,50 +29,7 @@ body {
   font-size: var(--font-size);
   line-height: var(--line-height);
   color: var(--primaryText);
-  background: linear-gradient(
-    45deg,
-    var(--bg-grad0),
-    var(--bg),
-    var(--bg-grad1)
-  );
-  background-size: 600% 600%;
-  -webkit-animation: gradientAnimation 30s ease infinite;
-  -moz-animation: gradientAnimation 30s ease infinite;
-  animation: gradientAnimation 30s ease infinite;
-}
-
-@-webkit-keyframes gradientAnimation {
-  0% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 100% 0%;
-  }
-}
-@-moz-keyframes gradientAnimation {
-  0% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 100% 0%;
-  }
-}
-@keyframes gradientAnimation {
-  0% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 100% 0%;
-  }
+  background-color: var(--bg);
 }
 
 .container {
@@ -199,19 +154,5 @@ label#switch-label:active:after {
     --primaryText: #c8d6ff;
     --deemphasizedText: #a1a1a1;
     --bg: #000e33;
-    --bg-grad0: #021a2d;
-    --bg-grad1: #16122e;
-  }
-  body {
-    background: linear-gradient(
-      45deg,
-      var(--bg-grad0),
-      var(--bg),
-      var(--bg-grad1)
-    );
-    background-size: 600% 600%;
-    -webkit-animation: gradientAnimation 30s ease infinite;
-    -moz-animation: gradientAnimation 30s ease infinite;
-    animation: gradientAnimation 30s ease infinite;
   }
 }
