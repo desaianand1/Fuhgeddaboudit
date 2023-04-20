@@ -18,7 +18,6 @@ async function setSavedState(toggleSwitch: HTMLInputElement) {
 }
 
 async function init(): Promise<void> {
-  console.log("popup initialized");
   const toggleSwitch: HTMLInputElement = <HTMLInputElement>(
     document.querySelector("input#toggle-switch[type=checkbox]")
   );

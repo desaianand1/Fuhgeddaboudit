@@ -11,6 +11,7 @@ const keywordMap = new Map<string, string[]>([
   ["ai", toolNounPhrases],
   ["artificialintelligence", toolNounPhrases],
   ["chatbot", toolNounPhrases],
+  ["autogpt", toolNounPhrases],
   ["chatbots", possessivePhrases],
   ["openai", authorityNounPhrases],
   ["openais", possessivePhrases],
@@ -31,6 +32,7 @@ const keywordMap = new Map<string, string[]>([
 const keyPhrasesMap = new Map<string, string[]>([
   ["open ai", authorityNounPhrases],
   ["open ais", possessivePhrases],
+  ["auto gpt", toolNounPhrases],
   ["gpt 3", toolNounPhrases],
   ["gpt 4", toolNounPhrases],
   ["chat gpt", authorityNounPhrases],
