@@ -152,7 +152,7 @@ label#switch-label:active:after {
   :root {
     --primary: #7096ff;
     --primaryText: #c8d6ff;
-    --deemphasizedText: #a1a1a1;
+    --deemphasizedText: #929FB9;
     --bg: #000e33;
   }
 }
