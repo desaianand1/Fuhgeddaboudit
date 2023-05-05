@@ -1,4 +1,4 @@
-# 🚮 Fuhgeddaboudit
+# <img align="center" height="42" src="./public/icons/48.png">&nbsp; Fuhgeddaboudit
 ![LICENSE](https://badgen.net/badge/license/MIT/blue) ![CHROME WEB STORE](https://badgen.net/chrome-web-store/v/bpcmajgfgplbbhdcgpbgeedmkapmajcj?icon=chrome&color=red) ![CHROME RATINGS](https://badgen.net/chrome-web-store/stars/bpcmajgfgplbbhdcgpbgeedmkapmajcj)
 
 ![Fuhgeddaboudit gif](https://media.giphy.com/media/5vYr8pku71778vdmeh/giphy.gif)
